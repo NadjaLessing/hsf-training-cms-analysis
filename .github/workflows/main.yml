@@ -89,7 +89,7 @@ jobs:
       - name: Download from plot
         uses: actions/download-artifact@v6
         with:
-          name: histograms
+          name: hist_ggH
           
       - name: test_cutflow_ggH
         run: python tests/test_cutflow_ggH.py
