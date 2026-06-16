@@ -2,14 +2,29 @@ name: example
 on: push
 
 jobs:
+
+  greeting:
+  
+    runs-on: ubuntu-latest
+    steps: 
+      - run: echo Hello World
+      
+      
+
   build_skim:
+    
+    needs: greeting
     runs-on: ubuntu-latest
     container: rootproject/root:${{ matrix.version }}
-    
+    continue-on-error: ${{ matrix.experimental }}
     strategy:
+      fail-fast: false
       matrix:
-        version: [6.26.10-conda, latest]
-    
+        version: [6.26.10-conda]
+        experimental: [false]
+        include:
+          - version: latest
+            experimental: true
     steps:
       - name: checkout repository
         uses: actions/checkout@v6
