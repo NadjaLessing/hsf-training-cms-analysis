@@ -12,9 +12,9 @@ jobs:
       matrix:
         version: [6.26.10-conda]
         experimental: [false]
-        include:
-          - version: latest
-            experimental: true
+        #include:
+        #  - version: latest
+        #    experimental: true
     steps:
       - name: checkout repository
         uses: actions/checkout@v6
@@ -25,7 +25,7 @@ jobs:
           FLAGS=$(root-config --cflags --libs)
           $COMPILER -g -O3 -Wall -Wextra -Wpedantic -o skim skim.cxx $FLAGS
           
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         with:
           name: skim${{ matrix.version }}
           path: skim     
@@ -40,11 +40,11 @@ jobs:
       - name: checkout repository
         uses: actions/checkout@v6
         
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v6
         with:
           name: skim6.26.10-conda
       
       - name: skim
         run: |
           chmod +x ./skim
-          ./skim
+          ./skim root://eospublic.cern.ch//eos/root-eos/HiggsTauTauReduced/GluGluToHToTauTau.root skim_ggH.root 19.6 11467.0 0.1
